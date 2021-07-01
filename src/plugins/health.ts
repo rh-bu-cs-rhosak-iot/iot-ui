@@ -2,10 +2,13 @@ import { FastifyPluginCallback } from 'fastify';
 import fp from 'fastify-plugin';
 import log from '../log';
 
-export interface HealthPluginOptions {
-}
+export interface HealthPluginOptions {}
 
-const healthPlugin: FastifyPluginCallback<HealthPluginOptions> = (server, options, done) => {
+const healthPlugin: FastifyPluginCallback<HealthPluginOptions> = (
+  server,
+  options,
+  done
+) => {
   log.debug('mounting health plugin');
   server.route({
     method: 'GET',
