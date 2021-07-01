@@ -1,10 +1,16 @@
 import fastify, { FastifyInstance } from 'fastify';
 import fastifyHttpProxy from 'fastify-http-proxy';
+import fastifyStatic from 'fastify-static';
+import path from 'path';
 import {NODE_ENV, HTTP_PORT, IOT_GRAPHQL_API_URL} from './config';
 
 const app: FastifyInstance = fastify({ logger: NODE_ENV === 'dev', disableRequestLogging: NODE_ENV != 'dev' });
 
 const port: number = Number(process.env.PORT) || 9090;
+
+app.register(fastifyStatic, {
+    root: path.join(__dirname, 'client/build')
+});
 
 //Provides a health endpoint to check
 app.register(require('./plugins/health'), {

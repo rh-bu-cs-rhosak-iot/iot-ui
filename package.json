@@ -16,6 +16,7 @@
     "fastify": "^3.18.1",
     "fastify-http-proxy": "^6.0.0",
     "fastify-plugin": "^3.0.0",
+    "fastify-static": "^4.2.2",
     "pino": "^6.11.2"
   },
   "devDependencies": {
