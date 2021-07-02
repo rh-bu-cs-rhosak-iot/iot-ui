@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import NotFoundView from './views/NotFoundView';
+import HomeView from './views/HomeView';
+import Nav from './components/Nav';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="flex flex-col h-screen justify-between">
+        <Nav />
+        <main className="mb-auto h-10">
+          <Switch>
+            <Route exact path={'/'} component={HomeView} />
+            <Route component={NotFoundView} />
+          </Switch>
+        </main>
+      </div>
+    </Router>
   );
 }
 

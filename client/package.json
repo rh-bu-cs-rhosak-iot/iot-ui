@@ -4,9 +4,9 @@
   "description": "UI application for meters",
   "main": "index.js",
   "scripts": {
-    "build": "BUILD_PATH='../dist/client/build' react-scripts build",
-    "format": "prettier src/**/*.tsx --trailing-comma=none --single-quote --write",
-    "lint": "prettier src/**/*.tsx --trailing-comma=none --single-quote --check"
+    "build": "BUILD_PATH='../dist/client/build' craco build",
+    "format": "prettier src/*.tsx src/**/*.tsx --trailing-comma=none --single-quote --write",
+    "lint": "prettier src/*.tsx src/**/*.tsx --trailing-comma=none --single-quote --check"
   },
   "license": "MIT",
   "browserslist": {
@@ -22,15 +22,21 @@
     ]
   },
   "dependencies": {
+    "@craco/craco": "^6.1.2",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@types/node": "^12.20.15",
     "@types/react": "^17.0.12",
     "@types/react-dom": "^17.0.8",
+    "@types/react-router-dom": "^5.1.7",
+    "autoprefixer": "^9.8.6",
+    "postcss": "^7.0.36",
     "prettier": "^2.3.2",
     "react-scripts": "4.0.3",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4",
     "typescript": "^4.3.5"
   }
 }
