@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "BUILD_PATH='../dist/client/build' craco build",
-    "format": "prettier src/*.tsx src/**/*.tsx --trailing-comma=none --single-quote --write",
-    "lint": "prettier src/*.tsx src/**/*.tsx --trailing-comma=none --single-quote --check"
+    "format": "prettier src/*.tsx src/**/*.tsx src/*.ts src/**/*.ts --trailing-comma=none --single-quote --write",
+    "lint": "prettier src/*.tsx src/**/*.tsx src/*.ts src/**/*.ts --trailing-comma=none --single-quote --check"
   },
   "eslintConfig": {
     "extends": [

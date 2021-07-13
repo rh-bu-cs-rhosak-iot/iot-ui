@@ -29,7 +29,12 @@ function App() {
 }
 
 function getGraphqlHost(): string {
-  return window.location.protocol + '//' + window.location.host + '/meters-graphql/graphql';
+  return (
+    window.location.protocol +
+    '//' +
+    window.location.host +
+    '/meters-graphql/graphql'
+  );
 }
 
 export default App;
