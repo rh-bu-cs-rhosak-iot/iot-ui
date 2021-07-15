@@ -5,6 +5,7 @@ import { convertToNumberOrDefaultTo, PAGE_SIZE } from '../utils/utils';
 import { parse, stringify } from 'query-string';
 import { MetersQuery } from '../graphql/graphql';
 import Loader from '../components/Loader';
+import { useState } from 'react';
 
 interface MeterListViewProps extends RouteComponentProps {
   history: History;
@@ -15,8 +16,17 @@ const MetersListView: React.FC<MeterListViewProps> = (
 ) => {
   const parsedQuery = parseQueryParams();
 
+  const [searchTermValue, setSearchTermValue] = useState<string>(
+    parsedQuery.search
+  );
+
   const { loading, error, data } = MetersQuery({
     variables: {
+      filter: {
+        address: {
+          contains: parsedQuery.search
+        }
+      },
       page: {
         limit: PAGE_SIZE,
         offset: parsedQuery.page * PAGE_SIZE
@@ -29,14 +39,29 @@ const MetersListView: React.FC<MeterListViewProps> = (
 
   function parseQueryParams() {
     const query = parse(props.location.search);
+    const searchQueryValue = query.search;
     const pageQueryValue = query.page;
 
     return {
+      search: Array.isArray(searchQueryValue) ? '' : searchQueryValue || '',
       page: Array.isArray(pageQueryValue)
         ? 0
         : convertToNumberOrDefaultTo(pageQueryValue)
     };
   }
+
+  const applySearch = () => {
+    if (!searchTermValue) {
+      return;
+    }
+
+    props.history.push(`/meters/?search=${searchTermValue.toUpperCase()}`);
+  };
+
+  const clearSearch = () => {
+    props.history.push(`/meters/`);
+    setSearchTermValue('');
+  };
 
   const nextPage = () => {
     if (parsedQuery.page + 1 >= MAX_PAGES) {
@@ -44,6 +69,7 @@ const MetersListView: React.FC<MeterListViewProps> = (
     }
 
     const query = stringify({
+      search: searchTermValue.toUpperCase(),
       page: parsedQuery.page + 1
     });
 
@@ -56,6 +82,7 @@ const MetersListView: React.FC<MeterListViewProps> = (
     }
 
     const query = stringify({
+      search: searchTermValue.toUpperCase(),
       page: parsedQuery.page - 1
     });
 
@@ -76,7 +103,6 @@ const MetersListView: React.FC<MeterListViewProps> = (
       </div>
     );
   } else {
-    // const paging =
     const rows = data?.meters.items.map((m, idx) => {
       return (
         <tr className="hover:bg-gray-200 fade-in" key={m?.id}>
@@ -97,6 +123,39 @@ const MetersListView: React.FC<MeterListViewProps> = (
     content = (
       <div>
         <div className="flex">
+          <form
+            onSubmit={(e) => {
+              applySearch();
+              e.preventDefault();
+              return false;
+            }}
+            className="flex-1 w-full max-w-md mx-auto"
+          >
+            <div className="flex items-center border-b border-blue-700 py-2">
+              <input
+                value={searchTermValue}
+                onChange={(e) => setSearchTermValue(e.target.value)}
+                className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                type="text"
+                placeholder="Search by address..."
+                aria-label="Search"
+              />
+              <button
+                onClick={() => applySearch()}
+                className="flex-shrink-0 bg-blue-700 hover:bg-blue-900 border-blue-700 hover:border-blue-900 text-sm border-4 text-white py-1 px-2 rounded"
+                type="button"
+              >
+                Search
+              </button>
+              <button
+                onClick={() => clearSearch()}
+                className="flex-shrink-0 border-transparent border-4 text-blue-700 hover:text-blue-800 text-sm py-1 px-2 rounded"
+                type="button"
+              >
+                Clear
+              </button>
+            </div>
+          </form>
           {/* See: https://tailwindui.com/components/application-ui/navigation/pagination */}
           <nav className="flex-1 justify-end relative z-0 inline-flex">
             <a
