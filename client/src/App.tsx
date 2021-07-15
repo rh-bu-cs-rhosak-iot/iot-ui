@@ -3,6 +3,7 @@ import NotFoundView from './views/NotFoundView';
 import HomeView from './views/HomeView';
 import Nav from './components/Nav';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import MetersListView from './views/MetersList';
 
 const client = new ApolloClient({
   uri: getGraphqlHost(),
@@ -19,6 +20,7 @@ function App() {
           <main className="mb-auto h-10">
             <Switch>
               <Route exact path={'/'} component={HomeView} />
+              <Route exact path={'/meters'} component={MetersListView} />
               <Route component={NotFoundView} />
             </Switch>
           </main>
