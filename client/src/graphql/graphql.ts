@@ -26,6 +26,19 @@ export const meters = gql`
   }
 `;
 
+export const getMeter = gql`
+  query GetMeter($id: ID!) {
+    meter(id: $id) {
+      id
+      address
+      latitude
+      longitude
+      status
+      updated
+    }
+  }
+`;
+
 export type Maybe<T> = T | null;
 
 export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
@@ -81,8 +94,8 @@ export type MetersQueryVariables = Exact<{
 export type Meter = {
   id: string;
   address: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   status?: string;
   updated?: number;
 };
@@ -105,6 +118,14 @@ export type MetersQueryResult = {
   };
 };
 
+export type GetMeterQueryVariables = Exact<{
+  id: string;
+}>;
+
+export type GetMeterQueryResult = {
+  meter: Maybe<MeterFields>;
+};
+
 export function CountMetersQuery() {
   return useQuery<CountMetersQueryResult, any>(countMeters, {});
 }
@@ -113,4 +134,13 @@ export function MetersQuery(
   options: QueryHookOptions<MetersQueryResult, MetersQueryVariables>
 ) {
   return useQuery<MetersQueryResult, MetersQueryVariables>(meters, options);
+}
+
+export function GetMeterQuery(
+  options: QueryHookOptions<GetMeterQueryResult, GetMeterQueryVariables>
+) {
+  return useQuery<GetMeterQueryResult, GetMeterQueryVariables>(
+    getMeter,
+    options
+  );
 }

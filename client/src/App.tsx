@@ -4,6 +4,7 @@ import HomeView from './views/HomeView';
 import Nav from './components/Nav';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import MetersListView from './views/MetersList';
+import MeterDetailView from './views/MeterDetailView';
 
 const client = new ApolloClient({
   uri: getGraphqlHost(),
@@ -21,6 +22,7 @@ function App() {
             <Switch>
               <Route exact path={'/'} component={HomeView} />
               <Route exact path={'/meters'} component={MetersListView} />
+              <Route path={'/meters/:id'} component={MeterDetailView} />
               <Route component={NotFoundView} />
             </Switch>
           </main>
