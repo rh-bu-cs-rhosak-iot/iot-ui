@@ -3,7 +3,7 @@ import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { History } from 'history';
 import { convertToNumberOrDefaultTo, PAGE_SIZE } from '../utils/utils';
 import { parse, stringify } from 'query-string';
-import { MetersQuery } from '../graphql/graphql';
+import { FindMetersQuery } from '../graphql/graphql';
 import Loader from '../components/Loader';
 import { useState } from 'react';
 
@@ -20,7 +20,7 @@ const MetersListView: React.FC<MeterListViewProps> = (
     parsedQuery.search
   );
 
-  const { loading, error, data } = MetersQuery({
+  const { loading, error, data } = FindMetersQuery({
     variables: {
       filter: {
         address: {

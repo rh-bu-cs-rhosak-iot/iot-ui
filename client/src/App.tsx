@@ -3,7 +3,7 @@ import NotFoundView from './views/NotFoundView';
 import HomeView from './views/HomeView';
 import Nav from './components/Nav';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import MetersListView from './views/MetersList';
+import MetersListView from './views/MetersListView';
 import MeterDetailView from './views/MeterDetailView';
 
 const client = new ApolloClient({

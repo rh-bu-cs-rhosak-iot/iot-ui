@@ -6,7 +6,7 @@ export const countMeters = gql`
   }
 `;
 
-export const meters = gql`
+export const findMeters = gql`
   query Meters(
     $filter: MeterFilter
     $page: PageRequest
@@ -85,7 +85,7 @@ export type CountMetersQueryResult = {
   countMeters: number;
 };
 
-export type MetersQueryVariables = Exact<{
+export type FindMetersQueryVariables = Exact<{
   filter?: Maybe<MeterFilter>;
   page?: Maybe<PageRequest>;
   orderBy?: Maybe<OrderByInput>;
@@ -100,7 +100,7 @@ export type Meter = {
   updated?: number;
 };
 
-export type MeterResultList = {
+export type MetersResultList = {
   items: Array<Maybe<Meter>>;
   offset?: Maybe<number>;
   limit?: Maybe<number>;
@@ -112,8 +112,8 @@ export type MeterFields = Pick<
   'id' | 'address' | 'latitude' | 'longitude' | 'status' | 'updated'
 >;
 
-export type MetersQueryResult = {
-  meters: Pick<MeterResultList, 'offset' | 'limit' | 'count'> & {
+export type FindMetersQueryResult = {
+  meters: Pick<MetersResultList, 'offset' | 'limit' | 'count'> & {
     items: Array<Maybe<MeterFields>>;
   };
 };
@@ -130,10 +130,13 @@ export function CountMetersQuery() {
   return useQuery<CountMetersQueryResult, any>(countMeters, {});
 }
 
-export function MetersQuery(
-  options: QueryHookOptions<MetersQueryResult, MetersQueryVariables>
+export function FindMetersQuery(
+  options: QueryHookOptions<FindMetersQueryResult, FindMetersQueryVariables>
 ) {
-  return useQuery<MetersQueryResult, MetersQueryVariables>(meters, options);
+  return useQuery<FindMetersQueryResult, FindMetersQueryVariables>(
+    findMeters,
+    options
+  );
 }
 
 export function GetMeterQuery(
